@@ -1,0 +1,39 @@
+{% extends 'page.twig' %}
+{% import 'form.twig' as f %}
+
+{% block header %}
+    <article class="col-md-12">
+	<h1 class="center-block">Upload</h1>
+    </article>
+{% endblock header %}
+
+{% block main %}
+    <section class="row">
+        <div class="col-md-offset-2 col-md-8">
+			<p>{{context.user.login}}</p>
+			ID: {{ id }}
+			
+			<!-- TODO Add option for multiple authors-->
+			<form action="#" method="post">
+					{{f.text({label: 'Author', name: 'author', required: 1})}}
+					
+					{{f.text({label: 'Subject', name: 'subject', required: 0})}}
+					
+					
+					
+				<button type="submit" class="btn btn-primary btn-lg">Update</button>
+			</form>
+			{{ success }}
+        </div>
+        <div class="col-md-2">
+	    <p>2 columns</p>
+	</div>
+    </section>
+{% endblock main %}
+
+
+{% block footer %}
+    <article class="col-md-12">
+        <p class="center-block">Footer</p>
+    </article>
+{% endblock footer %}

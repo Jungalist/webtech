@@ -1,0 +1,26 @@
+{% extends 'page.twig' %}
+
+{% block header %}
+    <article class="col-md-12">
+	<h1 class="center-block">Search</h1>
+    </article>
+{% endblock header %}
+
+{% block main %}
+    <section class="row">
+        <div class="col-md-offset-2 col-md-8">
+	    <p>{{context.user.login}}</p>
+		<p>Here ya twat {{hi}}</p>
+        </div>
+        <div class="col-md-2">
+	    <p>2 columns</p>
+	</div>
+    </section>
+{% endblock main %}
+
+
+{% block footer %}
+    <article class="col-md-12">
+        <p class="center-block">Footer</p>
+    </article>
+{% endblock footer %}

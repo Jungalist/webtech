@@ -16,8 +16,7 @@
 			<h1>{{context.user.login}}</h1>
 			<form action="#" method="post">
 				{{f.text({label: 'Email', name: 'email', 
-				value: context.user.email, required: 1})}
-				}
+				value: context.user.email, required: 1})}}
 				<button type="submit" class="btn btn-primary btn-lg">Update</button>
 			</form>
         </div>

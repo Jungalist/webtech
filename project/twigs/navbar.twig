@@ -5,7 +5,7 @@
         {% endblock %}
     </head> 
  
- <div class="navbar navbar-default">
+ <div class="navbar  navbar-default  no-bot" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
               <span class="sr-only">Toggle navigation</span>
@@ -15,7 +15,7 @@
             </button>
             <a class="navbar-brand" href="{{base}}/">{{context.sitename}}</a>
         </div>
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <div class="collapse navbar-collapse navbar-ex1-collapse" id="main-nav">
             <ul class="nav navbar-nav">
                     <li{{page == 'home' ? ' class="active"'}}><a href="{{base}}/">Home</a></li>
                     <li{{page == 'about' ? ' class="active"'}}><a href="{{base}}/about">About</a></li>

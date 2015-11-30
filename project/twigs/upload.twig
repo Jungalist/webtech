@@ -11,13 +11,18 @@
     <section class="row">
         <div class="col-md-offset-2 col-md-8">
 			<p>{{context.user.login}}</p>
-			ID: {{ id }}
-			
+			{{ test }}
 			<!-- TODO Add option for multiple authors-->
 			<form action="#" method="post">
 					{{f.text({label: 'Author', name: 'author', required: 1})}}
 					
 					{{f.text({label: 'Subject', name: 'subject', required: 0})}}
+					
+					{{f.text({label: 'Institution name: ', name: 'iName', required: 1})}}
+					
+					{{f.text({label: 'Institution country', name: 'country', required: 1})}}
+					
+					{{f.text({label: 'Publication Name', name: 'pubName', required: 1})}}
 					
 					
 					

@@ -1,6 +1,9 @@
+ @import url(https://fonts.googleapis.com/css?family=Roboto);
+ 
+ 
+$font-stack: 'Roboto', sans-serif;
+$bg-color: #d9e4ec; 
 
-$font-stack:    sans-serif;
-$bg-color: #fff;
 
 body {
   font-family: $font-stack;
@@ -23,3 +26,24 @@ body {
 }
 
 .noconfirm { color: red; }
+
+
+/*------------------------------------*\
+    #Main navbar style
+\*------------------------------------*/
+
+
+.navbar
+ {
+	 background-color:#789EAB;
+	 margin-bottom: 0;
+	 
+ }
+ #main-nav
+ {
+	 a{
+	     color: #000;
+	 }
+ }
+ 
+ 

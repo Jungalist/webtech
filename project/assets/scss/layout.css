@@ -1,6 +1,6 @@
 body {
   font-family: sans-serif;
-  background-color: white; }
+  background-color: #fff; }
 
 /*------------------------------------*\
     For the /admin pages
@@ -9,8 +9,18 @@ body {
  * Used for delete buttons
  */
 .delb {
-  color: red;
+  color: red; }
+
+.actb, .admb, .delb, .devb {
   cursor: pointer; }
 
 .noconfirm {
   color: red; }
+
+/*------------------------------------*\
+    #Main navbar style
+\*------------------------------------*/
+.nav {
+  margin-bottom: 0; }
+
+/*# sourceMappingURL=layout.css.map */

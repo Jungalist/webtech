@@ -1,0 +1,49 @@
+/*------------------------------------*\
+    #Jumbotron
+\*------------------------------------*/
+ 
+ .back 
+ {
+    position: relative;
+	 
+ }
+ 
+
+.picture {
+	position: relative; 
+    width: 100%;
+	z-index:-1;
+	
+	h1
+	{
+	    position: absolute;
+		top: 0.5em;
+		text-decoration: bold;
+		font-family: $font-stack; 
+		text-transform: uppercase;
+		text-shadow: 2px 2px #000;
+		right: 1.5em;
+		z-index: 1;
+		color: #FFF;
+	}
+	
+    .bottom
+       {
+	    position: absolute;
+        right: 5em;
+        bottom: 1em;
+        width: 250px;
+		z-index:1;
+		background: rgba(0, 0, 0, 0.7);
+        padding: 10px; 
+		color:#FFF;
+    }
+	
+	
+	img
+	{
+		position: relative;
+		z-index:1;
+		width:100%;
+	}
+}

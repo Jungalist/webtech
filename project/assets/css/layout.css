@@ -1,27 +1,31 @@
-
-
-/*------------------------------------*\
-    Things used everywhere
-\*------------------------------------*/
+@import url(https://fonts.googleapis.com/css?family=Roboto);
 body {
-    font-family: sans-serif;
-    background: #fff;
-}
-
+  font-family: "Roboto", sans-serif;
+  background-color: #d9e4ec; }
 
 /*------------------------------------*\
     For the /admin pages
 \*------------------------------------*/
-
 /**
  * Used for delete buttons
  */
 .delb {
-    color: red;
-}
+  color: red; }
 
-.actb, .admb, .delb, .devb, .fixed {
-    cursor: pointer;
-}
+.actb, .admb, .delb, .devb {
+  cursor: pointer; }
 
-.noconfirm { color: red; }
+.noconfirm {
+  color: red; }
+
+/*------------------------------------*\
+    #Main navbar style
+\*------------------------------------*/
+.navbar {
+  background-color: #789EAB;
+  margin-bottom: 0; }
+
+#main-nav a {
+  color: #000; }
+
+/*# sourceMappingURL=layout.css.map */

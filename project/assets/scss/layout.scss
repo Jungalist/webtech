@@ -3,11 +3,23 @@
  
 $font-stack: 'Roboto', sans-serif;
 $bg-color: #d9e4ec; 
+$hi-light: red;
+$nav-color:  #262626; 
+
 
 
 body {
   font-family: $font-stack;
   background-color: $bg-color;
+}
+
+/*------------------------------------*\
+    #General layout
+\*------------------------------------*/
+
+.cntr 
+{
+    text-align: center;	
 }
 
 /*------------------------------------*\
@@ -35,15 +47,38 @@ body {
 
 .navbar
  {
-	 background-color:#789EAB;
+	 background-color: $nav-color;
 	 margin-bottom: 0;
 	 
  }
+ 
  #main-nav
  {
-	 a{
-	     color: #000;
-	 }
+    a{
+	     color: #FFF;     
+			
+     }
+	 
+ }
+ 
+ body 
+ {
+	 #active
+		 {
+			background-color: $hi-light;
+		    color:#000;
+		 }
+	 
  }
  
  
+ .dropdown-menu
+ {
+	 background-color: $nav-color;
+	 
+	 ul>li>a:hover 
+	 {
+		background-color: $hi-light; 
+	 }
+	 
+ }

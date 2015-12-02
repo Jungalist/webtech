@@ -219,7 +219,7 @@
  */
         public function eignore($ignore)
         {
-            $this->errignore = $ignore;
+            $this->errignore = True;
             $wi = $this->wasignored;
             $this->wasignored = FALSE;
             return $wi;

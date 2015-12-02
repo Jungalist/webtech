@@ -1,6 +1,41 @@
 {% extends 'page.twig' %}
 {% import 'form.twig' as f %}
 
+{% block scripts %}
+    <!--<script src="project/assets/js/new-author.js" language="Javascript" type="text/javascript">-->
+	<!-- + (counter + 1) + " <br />{{f.text({label: 'Author" +  (count + 1) +"', name: 'author"+ (count + 1) + "', required: 1})}}" -->
+	<script>
+	//document.getElementById("foo").addEventListener("click", addAuthor("authors"));
+	var count = 1;
+    var max = 3;
+	
+	var blah = document.getElementById("testing").innerHTML;
+	blah.replace(/(\r\n|\n|\r)/g,"");
+	
+    function addAuthor(divName){
+		 if (count == max)  {
+			  alert("You have reached the limit of adding " + count + " authors");
+		 }
+		 else {
+		      count++;
+			  var newdiv = document.createElement('div');
+			  newdiv.innerHTML = blah.replace("REP", count);
+			  document.getElementById(divName).appendChild(newdiv);
+			  //document.getElementById("demo").innerHTML = count;
+			  //document.getElementById("testing").name = "author" + count;
+			  //document.getElementById("ii").setAttribute = ("name", "author");//+count
+			  //changeName(count);
+			 }
+			 
+	}
+	
+	function changeName(count){
+		//setAttribute = ("name", "author" + count);
+	}
+	</script>
+{% endblock scripts %}
+
+
 {% block header %}
     <article class="col-md-12">
 	<h1 class="center-block">Upload</h1>
@@ -8,30 +43,50 @@
 {% endblock header %}
 
 {% block main %}
+<!-- TODO replace this with a file somewhere else and do the /r replacing in a standalone script-->
+<form hidden action="#" method="post"><span id="testing"{{f.text({label: 'Author REP', name: 'authorArray[]' , required: 1})}}</span></form>
     <section class="row">
-        <div class="col-md-offset-2 col-md-8">
+        <div class="col-md-offset-3 col-md-6">
 			<p>{{context.user.login}}</p>
-			{{ test }}
+			
 			<!-- TODO Add option for multiple authors-->
 			<form action="#" method="post">
-					{{f.text({label: 'Author', name: 'author', required: 1})}}
+			
+					{% set authNum = 0 %}
+					<div id="authors">
+					
+					    {{f.text({label: 'Author 1', name: 'authorArray[]', required: 1})}}
+						<!-- {% set authNum = authNum + 1 %} -->
+					</div>
+					<button type="button" id="foo" value="Add author" onClick="addAuthor('authors');">
+					    <span class="glyphicon glyphicon-plus"></span>
+						Add author
+					</button>
+					
+					
+					<!--  TODO change to required -->
 					
 					{{f.text({label: 'Subject', name: 'subject', required: 0})}}
 					
-					{{f.text({label: 'Institution name: ', name: 'iName', required: 1})}}
+					{{f.text({label: 'Institution name: ', name: 'iName', required: 0})}}
 					
-					{{f.text({label: 'Institution country', name: 'country', required: 1})}}
+					{{f.text({label: 'Institution country', name: 'country', required: 0})}}
 					
-					{{f.text({label: 'Publication Name', name: 'pubName', required: 1})}}
-					
+					{{f.text({label: 'Publication Name', name: 'pubName', required: 0})}}
 					
 					
 				<button type="submit" class="btn btn-primary btn-lg">Update</button>
 			</form>
-			{{ success }}
+			<h1>{{ success }}</h1>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
 	    <p>2 columns</p>
+		<div id="demo">
+		{% for t in test %}
+		    {{t}}
+		{% endfor %}
+		</div>
+		
 	</div>
     </section>
 {% endblock main %}
@@ -42,3 +97,5 @@
         <p class="center-block">Footer</p>
     </article>
 {% endblock footer %}
+
+

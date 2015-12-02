@@ -4,16 +4,7 @@
 /**
  * Placing of nav bar
  */
+ul .nav .navbar-nav {
+  color: red; }
 
- .nav
- {
-     
- }
-
- ul{
-    .nav { 
-        .navbar-nav {
-            color: red;
-        }
-    }
-}
+/*# sourceMappingURL=navbar.css.map */

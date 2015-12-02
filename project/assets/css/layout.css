@@ -4,6 +4,12 @@ body {
   background-color: #d9e4ec; }
 
 /*------------------------------------*\
+    #General layout
+\*------------------------------------*/
+.cntr {
+  text-align: center; }
+
+/*------------------------------------*\
     For the /admin pages
 \*------------------------------------*/
 /**
@@ -22,10 +28,19 @@ body {
     #Main navbar style
 \*------------------------------------*/
 .navbar {
-  background-color: #789EAB;
+  background-color: #262626;
   margin-bottom: 0; }
 
 #main-nav a {
+  color: #FFF; }
+
+body #active {
+  background-color: red;
   color: #000; }
+
+.dropdown-menu {
+  background-color: #262626; }
+  .dropdown-menu ul > li > a:hover {
+    background-color: red; }
 
 /*# sourceMappingURL=layout.css.map */

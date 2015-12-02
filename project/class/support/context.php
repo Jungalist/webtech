@@ -3,7 +3,7 @@
  * Contains the definition of the Context class
  *
  * @author Lindsay Marshall <lindsay.marshall@ncl.ac.uk>
- * @copyright 2012-2013 Newcastle University
+ * @copyright 2012-2015 Newcastle University
  */
 /**
  * A class that stores various useful pieces of data for access throughout the rest of the system.
@@ -90,7 +90,6 @@
             }
             return NULL;
         }
-
 /**
  * Look in the _POST array for a key and return its trimmed value
  *
@@ -133,7 +132,71 @@
  */
         public function postpar($name, $dflt)
         {
-            return filter_has_var(INPUT_POST, $name) ? trim($_POST[$name]) : $dflt;
+            return filter_has_var(INPUT_POST, $name) ? $_POST[$name] : $dflt;
+        }
+/**
+ * Look in the _GET array for a key that is an array and return its trimmed value
+ *
+ * @param string	$name	The key
+ * @param boolean	$fail	If TRUE then generate a 400 if the key does not exist in the array
+ *
+ * @return ArrayIterator
+ */
+        public function mustgetapar($name, $fail = TRUE)
+        {
+            if (filter_has_var(INPUT_GET, $name) && is_array($_GET[$name]))
+            {
+                return new ArrayIterator($_GET[$name]);
+            }
+            if ($fail)
+            {
+                (new Web)->bad();
+            }
+            return NULL;
+        }
+/**
+ * Look in the _POST array for a key that is an array and return an iterator
+ *
+ * @param string	$name	The key
+ * @param boolean	$fail	If TRUE then generate a 400 if the key does not exist in the array
+ *
+ * @return ArrayIterator
+ */
+        public function mustpostapar($name, $fail = TRUE)
+        {
+            if (filter_has_var(INPUT_POST, $name) && is_array($_POST[$name]))
+            {
+                return new ArrayIterator($_POST[$name]);
+            }
+            if ($fail)
+            {
+                (new Web)->bad();
+            }
+            return NULL;
+        }
+/**
+ * Look in the _GET array for a key that is an array and return its trimmed value or a default value
+ *
+ * @param string	$name	The key
+ * @param mixed		$dflt	Returned if the key does not exist
+ *
+ * @return ArrayIterator
+ */
+        public function getapar($name, array $dflt = array())
+        {
+            return new ArrayIterator(filter_has_var(INPUT_GET, $name) && is_array($_GET[$name]) ? $_GET[$name] : $dflt);
+        }
+/**
+ * Look in the _POST array for a key that is an array and return its trimmed value or a default value
+ *
+ * @param string	$name	The key
+ * @param mixed		$dflt	Returned if the key does not exist
+ *
+ * @return ArrayIterator
+ */
+        public function postapar($name, array $dflt = array())
+        {
+            return new ArrayIterator(filter_has_var(INPUT_POST, $name) && is_array($_POST[$name]) ? $_POST[$name] : $dflt);
         }
 /**
  * Look in the _GET array for a key and apply filters
@@ -176,9 +239,40 @@
             return $this->reqaction;
         }
 /**
+ * $_FILES helper functions
+ */
+/**
+ * Make arrays of files work more like singletons
+ *
+ * @param string    $name
+ * @param string    $key
+ *
+ * @return array
+ */
+    public function filedata($name, $key = '')
+    {
+        $x = $_FILES[$name];
+        if ($key !== '')
+	{
+            return array(
+	        'name'     => $x['name'][$key],
+		'type'     => $x['type'][$key],
+		'size'     => $x['size'][$key],
+		'tmp_name' => $x['tmp_name'][$key],
+		'error'    => $x['error'][$key]
+	    );
+	}
+        return $x;
+    }
+/**
  * Return the part of the URL after the main action as set by .htaccess
  *
- * @return string
+ * See setup() below for how the URL is processed to create the result array.
+ *
+ * Note that if there is nothing after the action in the URL this function returns
+ * an array with a single element containing an empty string.
+ *
+ * @return array
  */
         public function rest()
         {
@@ -212,7 +306,7 @@
  */
 	public function sendfile($path, $name = '', $mime = '', $cache	= '', $etag = '')
 	{
-	    if ($mime == '')
+	    if ($mime === '')
 	    {
                 $finfo = finfo_open(FILEINFO_MIME_TYPE);
 		$mime = finfo_file($finfo, $path);
@@ -220,15 +314,15 @@
 	    }
             header('Content-Type: '.$mime);
             header('Content-Length: '.filesize($path));
-	    if ($name != '')
+	    if ($name !== '')
 	    {
                 header('Content-Disposition: attachment; filename="'.$name.'"');
 	    }
-	    if ($cache != '')
+	    if ($cache !== '')
 	    {
                 header('Cache-Control: '.$cache);
 	    }
-	    if ($etag != '')
+	    if ($etag !== '')
 	    {
                 header('ETag: "'.$cache.'"');
 	    }
@@ -257,7 +351,7 @@
  */
         public function sameuser($user)
         {
-            return $this->hasuser() && $this->user()->getID() == $user->getID();
+            return $this->hasuser() && $this->user()->equals($user);
         }
 /**
  * Do we have a logged in user?
@@ -383,7 +477,6 @@
         {
             (new Web)->relocate($this->local->base().$where);
         }
-
 /**
  * Load a bean or fail with a 400 error
  *
@@ -459,19 +552,18 @@
             if (isset($_SERVER['REDIRECT_URL']) && !preg_match('/index.php/', $_SERVER['REDIRECT_URL']))
             {
 /**
- * @todo There seems to be varying behavious across systems that generate REDIRECT_URL
- * that needs to be investigated and handled properly. Some systems seems to have the original in here
- * and others the rewritten. Weird.
+ *  Apache v 2.4.17 changed the the REDIRECT_URL value to be a full URL, so we need to strip this.
+ *  Older versions will not have this so the code will do nothing.
  */
-                $uri = $_SERVER['REDIRECT_URL'];
+                $uri = preg_replace('#^https?://[^/]+#', '', $_SERVER['REDIRECT_URL']);
             }
             else
             {
                 $uri = $_SERVER['REQUEST_URI'];
-                if ($_SERVER['QUERY_STRING'] != '')
-                { # there is a query string so get rid it of it from the URI
-                    list($uri) = explode('?', $uri);
-                }
+            }
+            if ($_SERVER['QUERY_STRING'] != '')
+            { # there is a query string so get rid it of it from the URI
+                list($uri) = explode('?', $uri);
             }
             $req = array_filter(explode('/', $uri)); # array_filter removes empty elements - trailing / or multiple /
 /*
@@ -495,7 +587,6 @@
                 $this->reqaction = strtolower(array_shift($req));
                 $this->reqrest = empty($req) ? array('') : array_values($req);
             }
-
             return $this;
         }
     }

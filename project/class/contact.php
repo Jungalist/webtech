@@ -20,6 +20,7 @@ require_once '/vendor/autoload.php';
 			echo $twig->render('contact.twig', array(
 				'hi' => 'Hello World',
 			));
+			
 		}
     }
 ?>

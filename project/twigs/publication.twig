@@ -1,5 +1,23 @@
 {% extends 'page.twig' %}
 
+{% block setup %}
+/*
+$(document).ready(function(){
+    $('.button').click(function(){
+        var clickBtnValue = $(this).val();
+        var ajaxurl = "class/publication.php",
+        data =  {'action': clickBtnValue};
+        $.post(ajaxurl, data, function (response) {
+            // Response div goes here.
+            alert("action performed successfully");
+        });
+    });
+
+});*/
+
+{% endblock %}
+
+
 
 {% block header %}
     <article class="col-md-12">
@@ -14,17 +32,28 @@
 		
 	</div>
 		
-	<div class="col-md-2">
+	<div class="col-md-1">
 		{{ id }}
 	</div>
 		
 	<div class="col-md-2">
-		    
+		{{ name }}
 	</div>
 		
 		
-    <div class="col-md-3">
-	    
+    <div class="col-md-1">
+	    {{ institution_id }}
+	
+    </div>
+	
+	<div class="col-md-2">
+	   <!-- TODO USE AJAX 
+		{{ url }}-->
+		{{url}}
+		<form action="resource" method="GET">
+			<input hidden name="path" value="{{url}}" type="text" /> 
+			<input type="submit" class="button" />
+		</form>
     </div>
 	
 	

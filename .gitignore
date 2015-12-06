@@ -1,6 +1,6 @@
 vendor/
 install/
-uploads/
+/project/uploads
 
 
 # Compiled source #

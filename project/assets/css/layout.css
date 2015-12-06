@@ -43,4 +43,13 @@ body #active {
   .dropdown-menu ul > li > a:hover {
     background-color: red; }
 
+ /*------------------------------------*\
+    #Forms
+\*------------------------------------*/
+#addauth {
+  margin-bottom: 8px; }
+
+.form-control:focus {
+  background-color: #FFF8DC; }
+
 /*# sourceMappingURL=layout.css.map */

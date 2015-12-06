@@ -1,133 +1,132 @@
 <?php
 
-require_once '/vendor/autoload.php';
-
-
     class Upload extends Siteaction
     {
 		
 		public function handle($context)
         {
-			$loader	= new Twig_Loader_Filesystem('twigs');
-			$twig = new Twig_Environment($loader);
 			
 			$success = False;
 			
-			//formHandling($context, $success);
-			//Add comma separated, multiple authors
 			
-			
-			
-			
-			
-			$authors = $context->postpar('authorArray', '');
-			
-			//Make getting vars from form into function?
-			// TODO add validation and then is it needed?
-			if  ((empty($authors) == False) and 
-				($iName = $context->postpar('iName', '')) != '' and
-				($country = $context->postpar('country', '')) != '' and 
-				($pubName = $context->postpar('pubName', '')) != ''){
-					
-					
-				
-				$success = self::formprocess($context, $authors, $iName, $country, $pubName);
-					
-					
-					
-					
-				//Add author if not exists
-				/*
-				//$test = $this->ifexists($authorName);				
-				$newAuthor = R::dispense('author');
-				$newAuthor->name = $authorName;
-				//$newAuthor->main_subject = postpar('subject', '');
-				$authID = R::store($newAuthor);
-				
-				
-				//Add intitution if not exists
-				$newInsti = R::dispense('institution');
-				$newInsti->name = $iName;
-				$newInsti->country = $country;
-				$instiID = R::store($newInsti);
-				
-				//Check name of pub, if exists ask what to do
-				//Add Publication
-				$newPub = R::dispense('publication');
-				$newPub->name = $pubName;
-				$newPub->authorID = $authID;
-				$newPub->institutionID = $instiID;
-				// TODO actually upload the file and store url
-				$newPub->url = '';
-				R::store($newPub);
-				*/
-				
-				
-				
+			$authors = [];
+			foreach ($context->postapar('authorArray') as $value)
+			{
+				$authors[] = $value;
 				
 			}
 			
-			//$a = $context->getpar('authNum', '');
 			
-			echo $twig->render('upload.twig', array(
-				//Use session cookies to not show if form not submitted or form validation to show, 'Sorry try again'
-				'success' => ($success) ? 'Success' : 'Fail'
-				,'test' => ($success) ?  array(
-				    $authors[1],
-                    $iName, $country, $pubName					
-				    
-				)
-				: ''
-			)); 
+				
+			// TODO add validation and then 
+			// TODO add all the other fields to if
+			if  ((empty($authors) == False) and 
+				($instiname = $context->postpar('instiname', '')) != '' and
+				//($country = $context->postpar('country', '')) != '' and 
+				($pubname = $context->postpar('pubname', '')) != '')
+				{
+					
+				
+				
+					
+				$country = $context->postpar('country', 'UK');
+
+				$success = self::formprocess($context, $authors, $instiname, $country, $pubname);
+				
+				//sendfile($path, $name = '', $mime = '', $cache	= '', $etag = '')
+				//$file = $context->postpar('file', ''));
+				//sendfile($path, $name = '', $mime = '', $cache	= '', $etag = '')
+
+				
+			}
+			
+			//Use session cookies to not show if form not submitted or form validation to show, 'Sorry try again'
+			
+			$context->local()->addval('success', ($success) ? 'Success' : 'Fail');
+			return 'upload.twig';
 			
 			
 		}
 		
-		static function formprocess($context, $authors, $iName, $country, $pubName)
+		static function formprocess($context, $authors, $instiname, $country, $pubname)
 		{
+			//R::nuke(); USE WIPE MOFO
+			
 			$authorsID = array();
-			//self::exists($author);
+			
+			//TODO self::exists($author); -- FIND OR CREATE
+			// Iterate over authors array and dispense beans
 			foreach($authors as $author){
 			    $newAuthor = R::dispense('author');
 				$newAuthor->name = $author;
-				//$id = R::store($newAuthor);
-				array_push($authorsID, $newAuthor);
+				$id = R::store($newAuthor);
+				array_push($authorsID, $newAuthor); //TODO change to array[]
 			}
 			
-			//$newAuthor->name = $authorName;
-			//$newAuthor->main_subject = postpar('subject', '');
-			
-			
-			
-			
-				
-				
-				//Add intitution if not exists
-				/*$newInsti = R::dispense('institution');
-				$newInsti->name = $iName;
-				$newInsti->country = $country;
-				$instiID = R::store($newInsti);*/
-				
 				//Check name of pub, if exists ask what to do
 				//Add Publication
 				$newPub = R::dispense('publication');
-				$newPub->name = $pubName;
-				//$newPub->authorID = "test";
-				//$newPub->institutionID = $instiID;
+				$newPub->name = $pubname;
+				$newPub->url = self::fileupload();
+			
 				// TODO actually upload the file and store url
-				//$newPub->url = '';
+				//$newPub->file = '';
 				
+				// Junction table Publication_author
 				 foreach($authorsID as $author){
-				    $newPub->ownPubAuthor[] = $author;
+				    $newPub->sharedPubAuthor[] = $author;
 					R::store($newPub); 
 				}
 				
+				//Add intitution if not exists
+				$newInsti = R::dispense('institution');
+				$newInsti->name = $instiname;
+				// TODO add Institution or search over institutions to select if already exists with autofill
+				$newInsti->country = $country;
+				
+				//Junction table institution_author
+				foreach($authorsID as $author){
+				    $newInsti->sharedInstiAuthor[] = $author;
+				}
+				
+				// One to many: one institution can have many publications
+				$newInsti->ownInstiPub[] = $newPub;
+				
+				R::store($newInsti);
 				
 				
-			
-			
+				
+				
+				
+				
+				/*$file = $context->postapar('file', );
+				filedata($name, '');*/
+				
+				
+				
 			
 			return True;
+		}
+		
+		static function fileupload()
+		{
+			//File upload
+				$name = $_FILES['file']['name'];
+				$size = $_FILES['file']['size'];
+				$type = $_FILES['file']['type'];
+				$tmp_name = $_FILES['file']['tmp_name'];
+				
+				
+				if(isset($name))
+				{
+					if(!empty($name))
+					{
+						$location = 'uploads/';
+						$path = $location.$name;
+						move_uploaded_file($tmp_name, $path);
+					}
+				}
+			return $path;
 		}
 		
 		/*function ifExists($authorName){
@@ -138,18 +137,5 @@ require_once '/vendor/autoload.php';
 			return $a;
 		}*/
 		
-		/*
-		public function formHandling($context, $success){
-			if ( ($authorName = $context->postpar('author', '')) != ''){
-				$newAuthor = R::dispense('author');
-				$newAuthor->author_id = '000001';
-				$newAuthor->name = $authorName;
-				$success = True;
-			} 
-				$success = False;
-			
-			
-		}*/
-		 
-	}
+	}	
 ?>

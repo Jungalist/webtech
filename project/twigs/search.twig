@@ -1,4 +1,5 @@
 {% extends 'page.twig' %}
+{% import 'form.twig' as f %}
 
 {% block header %}
     <article class="col-md-12">
@@ -9,11 +10,20 @@
 {% block main %}
     <section class="row">
         <div class="col-md-offset-2 col-md-8">
-	    <p>{{context.user.login}}</p>
-		<p>Here ya twat {{hi}}</p>
-        </div>
+		
+		<!-- TODO add url variables --> 
+		<form action="{{base}}/results" method="post">
+	        {{f.text({label: 'Search', name: 'search', required: 1})}}
+			<button type="submit" class="btn btn-primary btn-lg">Search</button>
+		</form>
+        
+		
+		</div>
         <div class="col-md-2">
-	    <p>2 columns</p>
+	    <p>Result: {{ result0 }}</p>
+		<p>Result: {{ result1 }}</p>
+		<p>Result: {{ result2 }}</p>
+		
 	</div>
     </section>
 {% endblock main %}

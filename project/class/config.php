@@ -6,9 +6,9 @@
     {
 	const BASEDNAME	= '/project';
 	const DBHOST	= 'localhost';
-	const DB	= 'project';
-	const DBUSER	= 'user';
-	const DBPW	= 'password';
+	const DB	= 'openaccess';
+	const DBUSER	= 'csc3123';
+	const DBPW	= 'Harbinger13';
 	const SITENAME	= 'project';
 	const SITEURL	= 'http://www.webtechproject.co.uk';
 	const SITENOREPLY	= 'admin@fdsiuf.com';

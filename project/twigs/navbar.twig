@@ -20,7 +20,7 @@
                     <li{{page == 'home' ? ' id="active"'}}><a href="{{base}}/">Home</a></li>
                     <li{{page == 'about' ? ' id="active"'}}><a href="{{base}}/about">About</a></li>
                     <li{{page == 'contact' ? ' id="active"'}}><a href="{{base}}/contact">Contact</a></li>
-                    <li{{page == 'search' ? ' id="active"'}}><a href="{{base}}/search">Search</a></li>
+                    <li{{(page == 'search' or page == 'results') ? ' id="active"'}}><a href="{{base}}/search">Search</a></li>
 					<li{{page == 'upload' ? ' id="active"'}}><a href="{{base}}/upload">Upload</a></li>
 					{% if context.hasadmin %}
                         <li class="dropdown">

@@ -1,0 +1,71 @@
+{% extends 'page.twig' %}
+
+
+{% block header %}
+    <article class="col-md-12">
+	<h1 class="center-block">Results</h1>
+    </article>
+{% endblock header %}
+
+{% block main %}
+
+<section class="row">
+    <div class="col-md-offset-2 col-md-3">
+		<h3>ID</h3>
+	</div>
+		
+	<div class="col-md-2">
+		<h3>Name</h3>
+	</div>
+		
+	<div class="col-md-2">
+		    <h3>Institution</h3>
+	</div>
+		
+		
+    <div class="col-md-3">
+	    
+    </div>
+	
+	
+</section>
+
+{% for result in results %}
+    <section class="row">
+        <div class="col-md-offset-2 col-md-3" >
+		    
+			<!-- Using real IDs is bad -->
+			   <p><a href="publication?id={{ result.id }}">{{ result.id }}</a></p>
+			
+		</div>
+		
+		<div class="col-md-2">
+		    
+			<p>{{ result.name }}</p>
+			
+		</div>
+		
+		<div class="col-md-2">
+		    
+			{% if result.institution_id == '' %}
+				<p>Null</p>
+			{% else %}
+				<p>{{ result.institution_id }}</p>
+			{% endif %}
+			
+		</div>
+		
+		
+        <div class="col-md-3">
+	    
+	    </div>
+    </section>
+{% endfor %}
+{% endblock main %}
+
+
+{% block footer %}
+    <article class="col-md-12">
+        <p class="center-block">Footer</p>
+    </article>
+{% endblock footer %}

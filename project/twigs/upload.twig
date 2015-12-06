@@ -2,10 +2,7 @@
 {% import 'form.twig' as f %}
 
 {% block scripts %}
-    <!--<script src="project/assets/js/new-author.js" language="Javascript" type="text/javascript">-->
-	<!-- + (counter + 1) + " <br />{{f.text({label: 'Author" +  (count + 1) +"', name: 'author"+ (count + 1) + "', required: 1})}}" -->
 	<script>
-	//document.getElementById("foo").addEventListener("click", addAuthor("authors"));
 	var count = 1;
     var max = 3;
 	
@@ -21,17 +18,11 @@
 			  var newdiv = document.createElement('div');
 			  newdiv.innerHTML = blah.replace("REP", count);
 			  document.getElementById(divName).appendChild(newdiv);
-			  //document.getElementById("demo").innerHTML = count;
-			  //document.getElementById("testing").name = "author" + count;
-			  //document.getElementById("ii").setAttribute = ("name", "author");//+count
-			  //changeName(count);
+			  
 			 }
 			 
 	}
-	
-	function changeName(count){
-		//setAttribute = ("name", "author" + count);
-	}
+
 	</script>
 {% endblock scripts %}
 
@@ -47,16 +38,16 @@
 <form hidden action="#" method="post"><span id="testing"{{f.text({label: 'Author REP', name: 'authorArray[]' , required: 1})}}</span></form>
     <section class="row">
         <div class="col-md-offset-3 col-md-6">
-			<p>{{context.user.login}}</p>
+			
 			
 			<!-- TODO Add option for multiple authors-->
-			<form action="#" method="post">
+			<form action="#" method="post" enctype="multipart/form-data">
 			
-					{% set authNum = 0 %}
+					
 					<div id="authors">
 					
 					    {{f.text({label: 'Author 1', name: 'authorArray[]', required: 1})}}
-						<!-- {% set authNum = authNum + 1 %} -->
+						
 					</div>
 					<button type="button" id="foo" value="Add author" onClick="addAuthor('authors');">
 					    <span class="glyphicon glyphicon-plus"></span>
@@ -68,11 +59,13 @@
 					
 					{{f.text({label: 'Subject', name: 'subject', required: 0})}}
 					
-					{{f.text({label: 'Institution name: ', name: 'iName', required: 0})}}
+					{{f.text({label: 'Institution name: ', name: 'instiname', required: 0})}}
 					
 					{{f.text({label: 'Institution country', name: 'country', required: 0})}}
 					
-					{{f.text({label: 'Publication Name', name: 'pubName', required: 0})}}
+					{{f.text({label: 'Publication Name', name: 'pubname', required: 0})}}
+					
+					{{f.file({label: 'Add file', name: 'file', required: 0})}}
 					
 					
 				<button type="submit" class="btn btn-primary btn-lg">Update</button>
@@ -82,9 +75,7 @@
         <div class="col-md-3">
 	    <p>2 columns</p>
 		<div id="demo">
-		{% for t in test %}
-		    {{t}}
-		{% endfor %}
+		
 		</div>
 		
 	</div>

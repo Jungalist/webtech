@@ -90,6 +90,7 @@
             }
             return NULL;
         }
+
 /**
  * Look in the _POST array for a key and return its trimmed value
  *
@@ -132,7 +133,7 @@
  */
         public function postpar($name, $dflt)
         {
-            return filter_has_var(INPUT_POST, $name) ? $_POST[$name] : $dflt;
+            return filter_has_var(INPUT_POST, $name) ? trim($_POST[$name]) : $dflt;
         }
 /**
  * Look in the _GET array for a key that is an array and return its trimmed value
@@ -154,6 +155,7 @@
             }
             return NULL;
         }
+
 /**
  * Look in the _POST array for a key that is an array and return an iterator
  *
@@ -328,6 +330,13 @@
 	    }
             readfile($path);
 	}
+	
+	/* ob_start'ob_gzhandler'); just before generating output_add_rewrite_var
+	 ob_end_flush(); _clean
+	 at the point of render
+	 */
+	 
+	 
 /**
  ***************************************
  * User related functions
@@ -477,6 +486,7 @@
         {
             (new Web)->relocate($this->local->base().$where);
         }
+
 /**
  * Load a bean or fail with a 400 error
  *
@@ -587,6 +597,7 @@
                 $this->reqaction = strtolower(array_shift($req));
                 $this->reqrest = empty($req) ? array('') : array_values($req);
             }
+
             return $this;
         }
     }

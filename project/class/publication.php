@@ -30,16 +30,10 @@
 			//Find instutution name
 			$institution = R::find('institution', 'id = ? ', [ $pubdata['institution_id'] ]);
 			
-			foreach($institution as $key1 => $value1)
+			foreach($institution as $key => $value)
 			{
-				foreach($value1 as $key2 => $value2)
-				{
-					
-					if($key2 == 'name')
-					{
-						$context->local()->addval('instiname', $value2);
-					}
-				}
+				$context->local()->addval('instiname', $value['name']);
+				
 			}
 			
 			//Find authors
@@ -48,15 +42,9 @@
 			$authids = [];
 			foreach($authors as $key => $value)
 			{
-				foreach($value as $key2 => $value2)
-				{
-					if($key2 == 'author_id')
-					{
-						//ADD TO CONTEXT
-						$authids[] = $value['author_id'];
-						
-					}
-				}
+				
+				$authids[] = $value['author_id'];
+				
 			}
 			
 			foreach($authids as $key => $value)
@@ -65,7 +53,7 @@
 					$autharr = R::find('author', 'id = ?', [ $value ]);
 					foreach($autharr as $key2 => $value2)
 					{
-						$finally[] = $value2['name'];
+						$authornames[] = $value2['name'];
 					}
 				
 			}
@@ -74,10 +62,9 @@
 			
 			
 			// TODO just author.id in .twig?
-			// and like this dummy - $value['author_id'];
 			// Also use the getrow from redbean
 			
-			$context->local()->addval('authors', $finally);
+			$context->local()->addval('authors', $authornames);
 			
 			
 			
@@ -96,11 +83,11 @@
 		
 		
 		
-		function full($path)
+		/*function full($path)
 		{
 			$context->sendfile($path, $name = '', $mime = '', $cache	= '', $etag = '');
 		}
-		
+		*/
 		
 	}	
 ?>

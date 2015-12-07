@@ -20,39 +20,32 @@ $(document).ready(function(){
 
 
 {% block header %}
-    <article class="col-md-12">
-	<h1 class="center-block">Publication</h1>
-    </article>
+   
 {% endblock header %}
 
 {% block main %}
 
 <section class="row">
-    <div class="col-md-offset-2 col-md-3">
-		
+    <div class="col-md-offset-2 col-md-6">
+		<h2>{{ name }}</h2>
+		<b>Authors: </b>
+		{% for f in authors %}
+			{{f}},
+		{% endfor %}
+	<b>Published: </b>{{ instiname }}
+	<br /><br />
+	<p>{{textabstract}}</p>
 	</div>
 		
-	<div class="col-md-1">
-		{{ id }}
-	</div>
-		
-	<div class="col-md-2">
-		{{ name }}
-	</div>
-		
-		
-    <div class="col-md-1">
-	    {{ institution_id }}
 	
-    </div>
 	
-	<div class="col-md-2">
+	<div class="col-md-4">
 	   <!-- TODO USE AJAX 
 		{{ url }}-->
-		{{url}}
+		
 		<form action="resource" method="GET">
 			<input hidden name="path" value="{{url}}" type="text" /> 
-			<input type="submit" class="button" />
+			<input type="submit" class="btn btn-primary-outline" value="View Full Text" />
 		</form>
     </div>
 	
@@ -63,7 +56,5 @@ $(document).ready(function(){
 
 
 {% block footer %}
-    <article class="col-md-12">
-        <p class="center-block">Footer</p>
-    </article>
+   
 {% endblock footer %}

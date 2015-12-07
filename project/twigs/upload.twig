@@ -6,7 +6,7 @@
 	var count = 1;
     var max = 3;
 	
-	var blah = document.getElementById("testing").innerHTML;
+	var blah = document.getElementById("translate").innerHTML;
 	blah.replace(/(\r\n|\n|\r)/g,"");
 	
     function addAuthor(divName){
@@ -35,7 +35,7 @@
 
 {% block main %}
 <!-- TODO replace this with a file somewhere else and do the /r replacing in a standalone script-->
-<form hidden action="#" method="post"><span id="testing"{{f.text({label: 'Author REP', name: 'authorArray[]' , required: 1})}}</span></form>
+<form hidden action="#" method="post"><span id="translate"{{f.text({label: 'Author REP', name: 'authorArray[]' , required: 1})}}</span></form>
     <section class="row">
         <div class="col-md-offset-3 col-md-6">
 			
@@ -64,6 +64,8 @@
 					{{f.text({label: 'Institution country', name: 'country', required: 0})}}
 					
 					{{f.text({label: 'Publication Name', name: 'pubname', required: 0})}}
+					
+					{{f.textarea({label: 'Abstract', name: 'textabstract', id: 'abs', required: 0})}}
 					
 					{{f.file({label: 'Add file', name: 'file', required: 0})}}
 					

@@ -45,11 +45,17 @@ body #active {
 
  /*------------------------------------*\
     #Forms
+	TODO add max size where needed
 \*------------------------------------*/
 #addauth {
   margin-bottom: 8px; }
 
 .form-control:focus {
   background-color: #FFF8DC; }
+
+#abs {
+  height: 150px;
+  max-height: 300px;
+  max-width: 900px; }
 
 /*# sourceMappingURL=layout.css.map */

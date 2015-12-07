@@ -30,13 +30,8 @@
 				
 					
 				$country = $context->postpar('country', 'UK');
-
-				$success = self::formprocess($context, $authors, $instiname, $country, $pubname);
-				
-				//sendfile($path, $name = '', $mime = '', $cache	= '', $etag = '')
-				//$file = $context->postpar('file', ''));
-				//sendfile($path, $name = '', $mime = '', $cache	= '', $etag = '')
-
+				$textabstract = $context->postpar('textabstract', 'missing abstract');
+				$success = self::formprocess($context, $authors, $instiname, $country, $pubname, $textabstract);
 				
 			}
 			
@@ -48,7 +43,7 @@
 			
 		}
 		
-		static function formprocess($context, $authors, $instiname, $country, $pubname)
+		static function formprocess($context, $authors, $instiname, $country, $pubname, $textabstract)
 		{
 			//R::nuke(); USE WIPE MOFO
 			
@@ -67,10 +62,9 @@
 				//Add Publication
 				$newPub = R::dispense('publication');
 				$newPub->name = $pubname;
+				$newPub->textabstract = $textabstract;
 				$newPub->url = self::fileupload();
 			
-				// TODO actually upload the file and store url
-				//$newPub->file = '';
 				
 				// Junction table Publication_author
 				 foreach($authorsID as $author){
@@ -93,16 +87,6 @@
 				$newInsti->ownInstiPub[] = $newPub;
 				
 				R::store($newInsti);
-				
-				
-				
-				
-				
-				
-				/*$file = $context->postapar('file', );
-				filedata($name, '');*/
-				
-				
 				
 			
 			return True;

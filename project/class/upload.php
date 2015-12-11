@@ -64,6 +64,7 @@
 				$newPub->name = $pubname;
 				$newPub->textabstract = $textabstract;
 				$newPub->url = self::fileupload();
+				$newPub->type =  $_FILES['file']['type'];
 			
 				
 				// Junction table Publication_author

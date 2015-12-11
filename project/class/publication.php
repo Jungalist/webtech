@@ -9,30 +9,19 @@
 			$pubdata = self::getpub($id);
 			$path = '';
 			
-			/*
-			if (isset($_POST['action'])) {
-				switch ($_POST['action']) {
-					case 'full':
-						full($path);
-						break;
-					case 'select':
-						
-						break;
-					}
-			}
-			*/
-			
 			foreach($pubdata as $key => $value)
 			{
 				$context->local()->addval($key, $value);
 			}
+			
+			
 			
 			//Find instutution name
 			$institution = R::find('institution', 'id = ? ', [ $pubdata['institution_id'] ]);
 			
 			foreach($institution as $key => $value)
 			{
-				$context->local()->addval('instiname', $value['name']);
+				$context->local()->addval('instiname', $value['name'].', '.$value['country']);
 				
 			}
 			
@@ -58,14 +47,23 @@
 				
 			}
 			
+			$name = $pubdata['name'];
+			$mime = $pubdata['type'];
+			$path = $pubdata['url'];
+			$name = substr($path, 8);
 			
+			
+			
+			if($context->postpar('resource', '') != ''){
+				$context->sendfile($path, $name, $mime, '', '');
+			
+			}
 			
 			
 			// TODO just author.id in .twig?
 			// Also use the getrow from redbean
 			
 			$context->local()->addval('authors', $authornames);
-			
 			
 			
 			return 'publication.twig';
@@ -81,13 +79,6 @@
 			return $pubdata;
 		}
 		
-		
-		
-		/*function full($path)
-		{
-			$context->sendfile($path, $name = '', $mime = '', $cache	= '', $etag = '');
-		}
-		*/
 		
 	}	
 ?>

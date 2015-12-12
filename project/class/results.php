@@ -8,37 +8,32 @@
         {
 			
 			$searchphrase = $context->postpar('search', '');
-			$query = [];
 			$results = [];
 			if ($searchphrase != '')
 			{
 				
-				// Publication search
-				$query = R::find('publication', 'name = ?', [$searchphrase]);
+				$query = R::find('publication',' name LIKE :name ',
+					array(':name' => '%' . $searchphrase . '%' )
+				);
+				$c = 0;
+				foreach($query as $q){
+					$results[$c]= $q;
+					$c++;
+					
+				}
 				
-				
-				
+			
+			}else{
+				$context->local()->addval('results', "Sorry, you need to type in a search phrase");
+				return 'results.twig';
 			}
-			$c = 0;
 			
-			// TODO can be done with one?
-			foreach($query as $q){
-				$results[$c]= $q;
-				$c++;
+			// Check for empty results list
+			if (!empty($results)){
+				$context->local()->addval('results', $results);
+			}else {
+				$context->local()->addval('empty', True);
 			}
-			$c = 0;
-			
-			
-			
-			// Twig for loops going over results? Can you just add array with addval?
-			/* foreach($results as $r){
-				$context->local()->addval('results' . $c, $r);
-				$c++;
-			} */
-			$context->local()->addval('results', $results);
-			
-			//$context->local()->addval('result1', $searchphrase);
-			
 			return 'results.twig';
 			
 		}

@@ -43,6 +43,9 @@ body #active {
   .dropdown-menu ul > li > a:hover {
     background-color: red; }
 
+.fa-sign-in {
+  color: #FFF; }
+
  /*------------------------------------*\
     #Forms
 	TODO add max size where needed

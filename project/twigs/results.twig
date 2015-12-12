@@ -9,6 +9,11 @@
 
 {% block main %}
 
+{% if empty %}
+
+<h2>Sorry, your search yielded no results</h2>
+
+{% else %}
 <section class="row">
     <div class="col-md-offset-2 col-md-3">
 		<h3>ID</h3>
@@ -61,6 +66,10 @@
 	    </div>
     </section>
 {% endfor %}
+
+{% endif %}
+
+
 {% endblock main %}
 
 

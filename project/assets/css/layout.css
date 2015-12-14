@@ -9,6 +9,9 @@ body {
 .cntr {
   text-align: center; }
 
+.mg-top20 {
+  margin-top: 20px; }
+
 /*------------------------------------*\
     For the /admin pages
 \*------------------------------------*/
@@ -60,5 +63,8 @@ body #active {
   height: 150px;
   max-height: 300px;
   max-width: 900px; }
+
+.h1 {
+  letter-spacing: 3px; }
 
 /*# sourceMappingURL=layout.css.map */

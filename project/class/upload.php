@@ -14,7 +14,6 @@
 			{
 				$authors[] = $value;
 				if(sizeof($authors)>=4){
-					//TODO do something to tell user only the first 5 were selected
 					break;
 				}
 			}
@@ -36,11 +35,15 @@
 				
 			}
 			
-			//Use session cookies to not show if form not submitted or form validation to show, 'Sorry try again'
 			
-			$context->local()->addval('success', ($success) ? 'Success' : 'Fail');
+			if($success)
+			{
+				$context->local()->addval('pubname', $pubname);
+				return 'success.twig';
+				// TODO FORM valfidation, show alert if server side failed maybe?
+			}
+			
 			return 'upload.twig';
-			
 			
 		}
 		
@@ -74,7 +77,7 @@
 					$id = R::store($newPub); 
 				}
 				
-				switch ($category) {
+				/*switch ($category) {
 					case "Paper":
 						self::processpaper();
 						break;
@@ -91,7 +94,7 @@
 					default:
 						// TODO have an alert or something, client side and server
 						echo "Select type";
-				}
+				}*/
 				
 				
 				//Add intitution if not exists
@@ -135,9 +138,9 @@
 			return $path;
 		}
 		
-		static function processpaper($category, $id){
+		/*static function processpaper($category, $id){
 			
-		}
+		}*/
 		
 		/*static function categorise($category, $id){
 			//Check type of pub
@@ -181,6 +184,16 @@
 			
 			return $a;
 		}*/
+		
+		function validation($data) 
+		{
+		  $data = trim($data);
+		  $data = stripslashes($data);
+		  $data = htmlspecialchars($data);
+		  return $data;
+		}
+		
+		
 		
 	}	
 ?>

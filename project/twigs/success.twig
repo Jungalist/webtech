@@ -1,0 +1,29 @@
+{% extends 'page.twig' %}
+
+{% block title %}
+	Upload successful
+{% endblock title %}
+
+{% block pageheader %}
+{% endblock pageheader %}
+
+
+{% block main %}
+    <section class="row mg-top20">
+        <div class="col-md-offset-2 col-md-8">
+			<div class="alert alert-success" role="alert">
+				<strong>Success</strong> You successfully uploaded your publication {{ pubname }}
+			</div>
+        </div>
+	</div>
+    </section>
+	<section class="row">
+        <div class="col-md-offset-4 col-md-4">
+			<h3><a href="{{ base }}">Take me back to the home page</a></h3>
+		</div>
+		<div class="col-md-4"></div>
+	</section>
+{% endblock main %}
+
+{% block pagefooter %}
+{% endblock pagefooter %}
